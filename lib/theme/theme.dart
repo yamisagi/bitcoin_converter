@@ -5,5 +5,6 @@ class ProductTheme {
       useMaterial3: true,
       appBarTheme: const AppBarTheme(
         centerTitle: true,
+        scrolledUnderElevation: 0,
       ));
 }

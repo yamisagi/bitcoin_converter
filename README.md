@@ -62,14 +62,14 @@ In this project, I am trying to create a clone BitCoin Convert App.
 * [x] Project Setup
 * [x] Create action button to set currency
 * [x] Create CupertinoPicker to select currency
-* [ ] Use Dart to perform asynchronous tasks.
-* [ ] Async and await usage.
-* [ ] Futures Usage.
-* [ ] Usage Dart [http](https://api.dart.dev/stable/2.18.0/dart-html/dart-html-library.html) package.
-* [ ] API Usage.
-* [ ] JSON Usage.
-* [ ] Try-Catch-Finally Usage.
-* [ ] Finish the Project.
+* [x] Use Dart to perform asynchronous tasks.
+* [x] Async and await usage.
+* [x] Futures Usage.
+* [x] Usage Dart [http](https://api.dart.dev/stable/2.18.0/dart-html/dart-html-library.html) package.
+* [x] API Usage.
+* [x] JSON Usage.
+* [x] Try-Catch-Finally Usage.
+* [x] Finish the Project.
 
 
 

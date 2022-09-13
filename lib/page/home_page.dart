@@ -1,7 +1,12 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:bitcoin_app/constants/constants.dart';
+import 'package:bitcoin_app/model/coin_model.dart';
 import 'package:bitcoin_app/product/coin_data.dart';
+import 'package:bitcoin_app/service/coin_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +19,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String selectedCoin = 'BTC';
-
   String selectedCurrency = CoinData.currenciesList[19];
+  CoinModel coinModel = CoinModel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,17 +31,23 @@ class _HomePageState extends State<HomePage> {
         child: CupertinoPicker(
           squeeze: 2,
           itemExtent: MediaQuery.of(context).size.height * 0.1,
-          onSelectedItemChanged: (index) {
+          onSelectedItemChanged: (index) async {
+            NetworkService service = NetworkService(
+              selectedCoin: selectedCoin,
+              selectedCurrency: selectedCurrency,
+            );
+            final value = await service.getData();
             setState(() {
               selectedCurrency = CoinData.currenciesList[index];
-              log('selectedCurrency: $index');
+              coinModel = value;
+              log(coinModel.rate.toString());
             });
           },
           children: [
             ...List.generate(
               CoinData.currenciesList.length,
               (index) => Center(
-                child: Text(selectedCurrency,
+                child: Text(CoinData.currenciesList[index],
                     style: Theme.of(context).textTheme.bodyLarge),
               ),
             ),
@@ -65,6 +77,7 @@ class _HomePageState extends State<HomePage> {
               onChanged: (value) {
                 setState(() {
                   selectedCoin = value ?? 'Unknown';
+                  log(value.toString());
                 });
               },
             ),
@@ -87,7 +100,7 @@ class _HomePageState extends State<HomePage> {
               borderRadius: const BorderRadius.all(Radius.circular(20)),
             ),
             child: Text(
-              '1$selectedCoin = ? $selectedCurrency',
+              '1${selectedCoin} = ${coinModel.rate?.toStringAsFixed(1)} ${selectedCurrency}',
               style: Theme.of(context).textTheme.headline3,
               textAlign: TextAlign.center,
             ),

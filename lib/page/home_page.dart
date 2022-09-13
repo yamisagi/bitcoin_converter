@@ -13,7 +13,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String selectedCurrency = currenciesList[19];
+  String selectedCoin = 'BTC';
+
+  String selectedCurrency = CoinData.currenciesList[19];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,15 +27,15 @@ class _HomePageState extends State<HomePage> {
           itemExtent: MediaQuery.of(context).size.height * 0.1,
           onSelectedItemChanged: (index) {
             setState(() {
-              selectedCurrency = currenciesList[index];
+              selectedCurrency = CoinData.currenciesList[index];
               log('selectedCurrency: $index');
             });
           },
           children: [
             ...List.generate(
-              currenciesList.length,
+              CoinData.currenciesList.length,
               (index) => Center(
-                child: Text(currenciesList[index],
+                child: Text(selectedCurrency,
                     style: Theme.of(context).textTheme.bodyLarge),
               ),
             ),
@@ -42,6 +44,32 @@ class _HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         title: const Text(Constants.appBarTitle),
+        actions: [
+          Padding(
+            padding: Constants.padding,
+            child: DropdownButton(
+              enableFeedback: false,
+              underline: Container(),
+              icon: const Icon(Icons.more_vert),
+              alignment: Alignment.center,
+              value: selectedCoin,
+              items: [
+                ...List.generate(
+                  CoinData.cryptoList.length,
+                  (index) => DropdownMenuItem(
+                    value: CoinData.cryptoList[index],
+                    child: Text(CoinData.cryptoList[index]),
+                  ),
+                ),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  selectedCoin = value ?? 'Unknown';
+                });
+              },
+            ),
+          )
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -59,7 +87,7 @@ class _HomePageState extends State<HomePage> {
               borderRadius: const BorderRadius.all(Radius.circular(20)),
             ),
             child: Text(
-              '1BTC = ? $selectedCurrency',
+              '1$selectedCoin = ? $selectedCurrency',
               style: Theme.of(context).textTheme.headline3,
               textAlign: TextAlign.center,
             ),

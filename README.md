@@ -60,6 +60,8 @@ In this project, I am trying to create a clone BitCoin Convert App.
 ## Roadmap
 
 * [x] Project Setup
+* [x] Create action button to set currency
+* [x] Create CupertinoPicker to select currency
 * [ ] Use Dart to perform asynchronous tasks.
 * [ ] Async and await usage.
 * [ ] Futures Usage.
